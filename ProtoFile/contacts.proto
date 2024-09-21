@@ -1,0 +1,31 @@
+syntax = "proto3";
+package contact;
+import "google/protobuf/timestamp.proto";
+option go_package = "github.com/ademeyer/Protocol-Buffer/contact";
+// protoc --protoc_path=ProtoFile --go_out=contact --go_opt=paths=source_relative ProtoFile/*.proto
+message Person {
+    string name = 1;
+    int32 id = 2; // Unique ID number for this person.
+    string email = 3;
+
+    message PhoneNumber {
+        string number = 1;
+        PhoneType type = 2;
+    }
+
+    repeated PhoneNumber phones = 4;
+
+    google.protobuf.Timestamp last_updated = 5;
+}
+
+enum PhoneType {
+    PHONE_TYPE_UNSPECIFIED = 0;
+    PHONE_TYPE_MOBILE = 1;
+    PHONE_TYPE_HOME = 2;
+    PHONE_TYPE_WORK = 3;
+}
+
+// Our Address book file
+message AddressBook {
+    repeated Person people = 1;
+}
